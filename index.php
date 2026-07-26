@@ -2,7 +2,8 @@
 /**
  * XAMPP Automated VirtualHost & Windows Hosts Manager
  * Features: Auto XAMPP path detection, duplicate checking, non-blocking restart, list, and delete.
- * Run this script with Administrator privileges.
+ * Run this script with Administrator privileges or run xampp as service.
+ * include('xampp-vhost-manager/index.php');
  */
 
 // Restrict access to localhost only
@@ -164,8 +165,8 @@ if (file_exists($vhostsFile)) {
             if (preg_match('/ServerName\s+([^\r\n]+)/i', $block, $snMatch) && preg_match('/DocumentRoot\s+"([^"]+)"/i', $block, $drMatch)) {
                 $serverName = trim($snMatch[1]);
                 $docRoot = trim($drMatch[1]);
-                // Exclude 'admin.' prefix from being counted as a separate primary entry line item
-                if (strpos($serverName, 'admin.') !== 0) {
+                // Exclude 'admin.' prefix and 'localhost' from the listing
+                if (strpos($serverName, 'admin.') !== 0 && strtolower($serverName) !== 'localhost') {
                     $configuredHosts[$serverName] = $docRoot;
                 }
             }
