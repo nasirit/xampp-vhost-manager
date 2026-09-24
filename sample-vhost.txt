@@ -185,7 +185,14 @@ SetEnv APPLICATION_ENV "development"
 
 <VirtualHost *:80>
     ServerName vocational.sktrims.com
-    Redirect permanent / https://vocational.sktrims.com/
+    DocumentRoot "D:/xampp/htdocs/vocational.sktrims.com"
+    SetEnv APPLICATION_ENV "development"
+    <Directory "D:/xampp/htdocs/vocational.sktrims.com">
+        DirectoryIndex index.php
+        AllowOverride All
+        Order allow,deny
+        Allow from all
+    </Directory>
 </VirtualHost>
 
 <VirtualHost *:443>
@@ -206,7 +213,14 @@ SetEnv APPLICATION_ENV "development"
 
 <VirtualHost *:80>
     ServerName adminvocational.sktrims.com
-    Redirect permanent / https://adminvocational.sktrims.com/
+    DocumentRoot "D:/xampp/htdocs/vocational.sktrims.com"
+    SetEnv APPLICATION_ENV "development"
+    <Directory "D:/xampp/htdocs/vocational.sktrims.com">
+        DirectoryIndex index.php
+        AllowOverride All
+        Order allow,deny
+        Allow from all
+    </Directory>
 </VirtualHost>
 
 <VirtualHost *:443>
