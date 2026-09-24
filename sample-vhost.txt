@@ -1,0 +1,243 @@
+# Virtual Hosts
+#
+# Required modules: mod_log_config
+
+# If you want to maintain multiple domains/hostnames on your
+# machine you can setup VirtualHost containers for them. Most configurations
+# use only name-based virtual hosts so the server doesn't need to worry about
+# IP addresses. This is indicated by the asterisks in the directives below.
+#
+# Please see the documentation at 
+# <URL:http://httpd.apache.org/docs/2.4/vhosts/>
+# for further details before you try to setup virtual hosts.
+#
+# You may use the command line option '-S' to verify your virtual host
+# configuration.
+
+#
+# Use name-based virtual hosting.
+#
+##NameVirtualHost *:80
+#
+# VirtualHost example:
+# Almost any Apache directive may go into a VirtualHost container.
+# The first VirtualHost section is used for all requests that do not
+# match a ##ServerName or ##ServerAlias in any <VirtualHost> block.
+#
+##
+
+##
+
+
+
+<VirtualHost *:80>
+ServerName localhost
+DocumentRoot "D:/xampp/htdocs"
+SetEnv APPLICATION_ENV "development"
+    <Directory "D:/xampp/htdocs">
+        AllowOverride All
+        Order allow,deny
+        Allow from all
+    </Directory> 
+</VirtualHost>
+
+
+<VirtualHost *:80>
+ServerName sksoftsolutionsl.com
+DocumentRoot "D:/xampp/htdocs/sksoftsolutions.ca"
+SetEnv APPLICATION_ENV "development"
+    <Directory "D:/xampp/htdocs/sksoftsolutions.ca">
+        DirectoryIndex index.php
+        AllowOverride All
+        Order allow,deny
+        Allow from all
+    </Directory> 
+</VirtualHost>
+
+<VirtualHost *:80>
+ServerName admin.sksoftsolutionsl.com
+DocumentRoot "D:/xampp/htdocs/sksoftsolutions.ca"
+SetEnv APPLICATION_ENV "development"
+    <Directory "D:/xampp/htdocs/sksoftsolutions.ca">
+        DirectoryIndex index.php
+        AllowOverride All
+        Order allow,deny
+        Allow from all
+    </Directory> 
+</VirtualHost>
+
+
+<VirtualHost *:80>
+ServerName local-bk.com
+DocumentRoot "D:/xampp/htdocs/SK-Bangla-Kagoj"
+SetEnv APPLICATION_ENV "development"
+    <Directory "D:/xampp/htdocs/SK-Bangla-Kagoj">
+        DirectoryIndex index.php
+        AllowOverride All
+        Order allow,deny
+        Allow from all
+    </Directory> 
+</VirtualHost>
+
+<VirtualHost *:80>
+ServerName admin.local-bk.com
+DocumentRoot "D:/xampp/htdocs/SK-Bangla-Kagoj"
+SetEnv APPLICATION_ENV "development"
+    <Directory "D:/xampp/htdocs/SK-Bangla-Kagoj">
+        DirectoryIndex index.php
+        AllowOverride All
+        Order allow,deny
+        Allow from all
+    </Directory> 
+</VirtualHost>
+
+
+<VirtualHost *:80>
+ServerName admin.spidertextilz.com
+DocumentRoot "D:/xampp/htdocs/spidertextile"
+SetEnv APPLICATION_ENV "development"
+    <Directory "D:/xampp/htdocs/spidertextile">
+        DirectoryIndex index.php
+        AllowOverride All
+        Order allow,deny
+        Allow from all
+    </Directory> 
+</VirtualHost>
+
+<VirtualHost *:80>
+ServerName spidertextilz.com
+DocumentRoot "D:/xampp/htdocs/spidertextile"
+SetEnv APPLICATION_ENV "development"
+    <Directory "D:/xampp/htdocs/spidertextile">
+        DirectoryIndex index.php
+        AllowOverride All
+        Order allow,deny
+        Allow from all
+    </Directory> 
+</VirtualHost>
+
+<VirtualHost *:80>
+ServerName 160.30.189.124
+DocumentRoot "D:/xampp/htdocs/160.30.189.124"
+SetEnv APPLICATION_ENV "development"
+    <Directory "D:/xampp/htdocs/160.30.189.124">
+        DirectoryIndex index.php
+        AllowOverride All
+        Order allow,deny
+        Allow from all
+    </Directory> 
+</VirtualHost>
+
+
+
+<VirtualHost *:80>
+    ServerName admin.192.168.0.155
+    DocumentRoot "D:/xampp/htdocs/zk-cloud-att-log-php"
+    SetEnv APPLICATION_ENV "development"
+    <Directory "D:/xampp/htdocs/zk-cloud-att-log-php">
+        DirectoryIndex index.php
+        AllowOverride All
+        Order allow,deny
+        Allow from all
+    </Directory>
+</VirtualHost>
+
+<VirtualHost *:80>
+    ServerName 192.168.0.155
+    DocumentRoot "D:/xampp/htdocs/zk-cloud-att-log-php"
+    SetEnv APPLICATION_ENV "development"
+    <Directory "D:/xampp/htdocs/zk-cloud-att-log-php">
+        DirectoryIndex index.php
+        AllowOverride All
+        Order allow,deny
+        Allow from all
+    </Directory>
+</VirtualHost>
+
+
+
+<VirtualHost *:80>
+    ServerName admin.portal.sdch.edu.bd
+    DocumentRoot "D:/xampp/htdocs/sapporo"
+    SetEnv APPLICATION_ENV "development"
+    <Directory "D:/xampp/htdocs/sapporo">
+        DirectoryIndex index.php
+        AllowOverride All
+        Order allow,deny
+        Allow from all
+    </Directory>
+</VirtualHost>
+
+<VirtualHost *:80>
+    ServerName portal.sdch.edu.bd
+    DocumentRoot "D:/xampp/htdocs/sapporo"
+    SetEnv APPLICATION_ENV "development"
+    <Directory "D:/xampp/htdocs/sapporo">
+        DirectoryIndex index.php
+        AllowOverride All
+        Order allow,deny
+        Allow from all
+    </Directory>
+</VirtualHost>
+
+
+
+
+<VirtualHost *:80>
+    ServerName vocational.sktrims.com
+    Redirect permanent / https://vocational.sktrims.com/
+</VirtualHost>
+
+<VirtualHost *:443>
+    ServerName vocational.sktrims.com
+    DocumentRoot "D:/xampp/htdocs/vocational.sktrims.com"
+    SetEnv APPLICATION_ENV "development"
+
+    SSLEngine on
+    SSLCertificateFile "D:/xampp/apache/conf/ssl.crt/server.crt"
+    SSLCertificateKeyFile "D:/xampp/apache/conf/ssl.key/server.key"
+
+    <Directory "D:/xampp/htdocs/vocational.sktrims.com">
+        DirectoryIndex index.php
+        AllowOverride All
+        Require all granted
+    </Directory>
+</VirtualHost>
+
+<VirtualHost *:80>
+    ServerName adminvocational.sktrims.com
+    Redirect permanent / https://adminvocational.sktrims.com/
+</VirtualHost>
+
+<VirtualHost *:443>
+    ServerName adminvocational.sktrims.com
+    DocumentRoot "D:/xampp/htdocs/vocational.sktrims.com"
+    SetEnv APPLICATION_ENV "development"
+
+    SSLEngine on
+    SSLCertificateFile "D:/xampp/apache/conf/ssl.crt/server.crt"
+    SSLCertificateKeyFile "D:/xampp/apache/conf/ssl.key/server.key"
+
+    <Directory "D:/xampp/htdocs/vocational.sktrims.com">
+        DirectoryIndex index.php
+        AllowOverride All
+        Require all granted
+    </Directory>
+</VirtualHost>
+
+
+
+
+
+
+<VirtualHost *:80>
+    ServerName manage.sktrims.com
+    DocumentRoot "D:/xampp/htdocs/xampp-vhost-manager"
+    SetEnv APPLICATION_ENV "development"
+    <Directory "D:/xampp/htdocs/xampp-vhost-manager">
+        DirectoryIndex index.php
+        AllowOverride All
+        Order allow,deny
+        Allow from all
+    </Directory>
+</VirtualHost>
