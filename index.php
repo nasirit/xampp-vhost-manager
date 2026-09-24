@@ -7,10 +7,13 @@
  */
 
 // Restrict access to localhost only
-$allowedIps = ['127.0.0.1', '::1', 'localhost'];
 $clientIp = $_SERVER['REMOTE_ADDR'] ?? '';
+$allowedIps = ['127.0.0.1', '::1'];
 
-if (!in_array($clientIp, $allowedIps)) {
+$isLocalhost = in_array($clientIp, $allowedIps);
+$isLocalNetwork = str_starts_with($clientIp, '192.168.');
+
+if (!$isLocalhost && !$isLocalNetwork) {
     http_response_code(403);
     die("Server is running");
 }
@@ -32,7 +35,7 @@ $status = "";
 // Handle Delete Request
 if (isset($_GET['action']) && $_GET['action'] === 'delete' && !empty($_GET['domain'])) {
     $domainToDelete = trim($_GET['domain']);
-    $subDomainToDelete = "admin." . $domainToDelete;
+    $subDomainToDelete = "admin" . $domainToDelete;
 
     // 1. Clean httpd-vhosts.conf
     if (file_exists($vhostsFile)) {
@@ -82,7 +85,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $status = "error";
     } else {
         $targetDir = "{$htdocsPath}/{$dirName}";
-        $subDomain = "admin." . $domain;
+        $subDomain = "admin" . $domain;
 
         $vhostsContent = file_exists($vhostsFile) ? file_get_contents($vhostsFile) : "";
         $hostsContent  = file_exists($windowsHostsFile) ? file_get_contents($windowsHostsFile) : "";
@@ -165,8 +168,8 @@ if (file_exists($vhostsFile)) {
             if (preg_match('/ServerName\s+([^\r\n]+)/i', $block, $snMatch) && preg_match('/DocumentRoot\s+"([^"]+)"/i', $block, $drMatch)) {
                 $serverName = trim($snMatch[1]);
                 $docRoot = trim($drMatch[1]);
-                // Exclude 'admin.' prefix and 'localhost' from the listing
-                if (strpos($serverName, 'admin.') !== 0 && strtolower($serverName) !== 'localhost') {
+                // Exclude 'admin' prefix and 'localhost' from the listing
+                if (strpos($serverName, 'admin') !== 0 && strtolower($serverName) !== 'localhost') {
                     $configuredHosts[$serverName] = $docRoot;
                 }
             }
@@ -253,7 +256,7 @@ if (isset($_GET['msg'])) {
                     <tr>
                         <td>
                             <a class="btn-link" href="http://<?= htmlspecialchars($domainName); ?>" target="_blank"><?= htmlspecialchars($domainName); ?></a><br>
-                            <a class="btn-link" style="font-size: 12px; color: #6c757d;" href="http://admin.<?= htmlspecialchars($domainName); ?>" target="_blank">admin.<?= htmlspecialchars($domainName); ?></a>
+                            <a class="btn-link" style="font-size: 12px; color: #6c757d;" href="http://admin<?= htmlspecialchars($domainName); ?>" target="_blank">admin<?= htmlspecialchars($domainName); ?></a>
                         </td>
                         <td style="word-break: break-all; color: #555;"><?= htmlspecialchars($docRoot); ?></td>
                         <td>
