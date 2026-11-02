@@ -127,7 +127,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     "        Order allow,deny\n" .
                     "        Allow from all\n" .
                     "    </Directory>\n" .
-                    "</VirtualHost>";
                     "</VirtualHost>\n\n" .
                     "<VirtualHost *:443>\n" .
                     "    ServerName {$subDomain}\n" .
