@@ -40,19 +40,15 @@ if (isset($_GET['action']) && $_GET['action'] === 'delete' && !empty($_GET['doma
     // 1. Clean httpd-vhosts.conf
     if (file_exists($vhostsFile)) {
         $vhostsData = file_get_contents($vhostsFile);
-        // Regex pattern to strip out the virtual host blocks matching this domain and its admin variant
-        $pattern = '/# Added automatically.*?(<VirtualHost \*:80>.*?ServerName (' . preg_quote($subDomainToDelete, '/') . '|' . preg_quote($domainToDelete, '/') . ').*?<\/VirtualHost>)/is';
-        
-        // Remove blocks systematically
-        $vhostsDataCleaned = preg_replace_callback('/(<VirtualHost \*:80>.*?<\/VirtualHost>)/is', function($match) use ($domainToDelete, $subDomainToDelete) {
-            if (strpos($match[1], $domainToDelete) !== false || strpos($match[1], $subDomainToDelete) !== false) {
-                return ''; // Remove this block
+        // Remove matching HTTP and HTTPS blocks without affecting similarly named domains.
+        $vhostsDataCleaned = preg_replace_callback('/<VirtualHost\b[^>]*>.*?<\/VirtualHost>/is', function($match) use ($domainToDelete, $subDomainToDelete) {
+            if (preg_match('/ServerName\s+([^\s\r\n]+)/i', $match[0], $serverNameMatch)
+                && (strcasecmp($serverNameMatch[1], $domainToDelete) === 0 || strcasecmp($serverNameMatch[1], $subDomainToDelete) === 0)) {
+                return '';
             }
             return $match[0];
         }, $vhostsData);
 
-        // Also clean up tracking comment header lines if any left over
-        $vhostsDataCleaned = preg_replace('/# Added automatically on [^\r\n]*/', '', $vhostsDataCleaned);
         file_put_contents($vhostsFile, trim($vhostsDataCleaned) . "\n");
     }
 
