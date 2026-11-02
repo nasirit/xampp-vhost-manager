@@ -129,20 +129,34 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     "    </Directory>\n" .
                     "</VirtualHost>";
                     "</VirtualHost>\n\n" .
-                    "# <VirtualHost *:443>\n" .
-                    "#     ServerName {$domain}\n" .
-                    "#     DocumentRoot \"{$targetDir}\"\n" .
-                    "#     SetEnv APPLICATION_ENV \"development\"\n" .
-                    "#     SSLEngine on\n" .
-                    "#     SSLCertificateFile \"C:\\Certbot\\live\\{$domain}\\fullchain.pem\"\n" .
-                    "#     SSLCertificateKeyFile \"C:\\Certbot\\live\\{$domain}\\privkey.pem\"\n" .
-                    "#     <Directory \"{$targetDir}\">\n" .
-                    "#         DirectoryIndex index.php index.html\n" .
-                    "#         AllowOverride All\n" .
-                    "#         Order allow,deny\n" .
-                    "#         Allow from all\n" .
-                    "#     </Directory>\n" .
-                    "# </VirtualHost>";
+                    "<VirtualHost *:443>\n" .
+                    "    ServerName {$subDomain}\n" .
+                    "    DocumentRoot \"{$targetDir}\"\n" .
+                    "    SetEnv APPLICATION_ENV \"development\"\n" .
+                    "    SSLEngine on\n" .
+                    "    SSLCertificateFile \"C:\\Certbot\\live\\sktrims.com\\fullchain.pem\"\n" .
+                    "    SSLCertificateKeyFile \"C:\\Certbot\\live\\sktrims.com\\privkey.pem\"\n" .
+                    "    <Directory \"{$targetDir}\">\n" .
+                    "        DirectoryIndex index.php index.html\n" .
+                    "        AllowOverride All\n" .
+                    "        Order allow,deny\n" .
+                    "        Allow from all\n" .
+                    "    </Directory>\n" .
+                    "</VirtualHost>\n\n" .
+                    "<VirtualHost *:443>\n" .
+                    "    ServerName {$domain}\n" .
+                    "    DocumentRoot \"{$targetDir}\"\n" .
+                    "    SetEnv APPLICATION_ENV \"development\"\n" .
+                    "    SSLEngine on\n" .
+                    "    SSLCertificateFile \"C:\\Certbot\\live\\sktrims.com\\fullchain.pem\"\n" .
+                    "    SSLCertificateKeyFile \"C:\\Certbot\\live\\sktrims.com\\privkey.pem\"\n" .
+                    "    <Directory \"{$targetDir}\">\n" .
+                    "        DirectoryIndex index.php index.html\n" .
+                    "        AllowOverride All\n" .
+                    "        Order allow,deny\n" .
+                    "        Allow from all\n" .
+                    "    </Directory>\n" .
+                    "</VirtualHost>";
 
                 if (file_put_contents($vhostsFile, $vhostConfig, FILE_APPEND) === false) {
                     $message = "Failed to write to Apache vhosts configuration file.";
